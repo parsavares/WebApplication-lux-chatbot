@@ -90,30 +90,55 @@ Follow these steps to run the application in Visual Studio Code:
 Here is an overview of the project directory structure:
 
 luxtutor-front/
+
 ├── node_modules/
+
 ├── public/
+
 ├── src/
+
 │ ├── assets/
+
 │ │ ├── luxembourgFlag.jpg
+
 │ │ └── uni.png
+
 │ ├── components/
+
 │ │ ├── Footer.tsx
+
 │ │ ├── Header.tsx
+
 │ │ └── MainContent.tsx
+
 │ ├── App.tsx
+
 │ ├── index.css
+
 │ ├── index.tsx
+
 │ ├── logo.svg
+
 │ ├── react-app-env.d.ts
+
 │ ├── reportWebVitals.ts
+
 │ └── setupTests.ts
+
 ├── tailwind.config.js
+
 ├── package.json
+
 ├── tsconfig.json
+
 ├── postcss.config.js
+
 ├── README.md
+
 ├── package-lock.json
+
 └── .gitignore
+
 
 
 ## Contact
