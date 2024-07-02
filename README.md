@@ -99,6 +99,8 @@ luxtutor-front/
 
 │ ├── assets/
 
+│ │ ├── luxembourgFlag.gif
+
 │ │ ├── luxembourgFlag.jpg
 
 │ │ └── uni.png
