@@ -103,7 +103,7 @@ luxtutor-front/
 
 │ │ ├── luxembourgFlag.jpg
 
-│ │ └── uni.png
+│ │ └── uni.svg
 
 │ ├── components/
 
