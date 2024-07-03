@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Signup: React.FC = () => {
     const [name, setName] = useState('');
@@ -7,6 +8,8 @@ const Signup: React.FC = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [captcha, setCaptcha] = useState('');
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,6 +22,9 @@ const Signup: React.FC = () => {
         console.log('Email:', email);
         console.log('Password:', password);
         console.log('Captcha:', captcha);
+
+        // Navigate to Sign In page upon successful signup
+        navigate('/signin');
     };
 
     return (
@@ -102,6 +108,7 @@ const Signup: React.FC = () => {
                 </div>
             </form>
         </div>
+
     );
 }
 

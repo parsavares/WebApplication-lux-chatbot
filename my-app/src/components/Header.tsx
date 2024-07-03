@@ -12,10 +12,9 @@ const Header: React.FC = () => {
             <nav className="flex space-x-6">
                 <a href="https://github.com/othmane-mahfoud/luxtutor-front" target="_blank" rel="noopener noreferrer" className="hover:underline">Project</a>
                 <a href="https://github.com/othmane-mahfoud/luxtutor-front?tab=readme-ov-file#contact" target="_blank" rel="noopener noreferrer" className="hover:underline">Contact</a>
-
             </nav>
             <div>
-                <a href="#" className="hover:underline">Sign In</a> | 
+                <Link to="/signin" className="hover:underline">Sign In</Link> |
                 <Link to="/signup" className="hover:underline">Sign Up</Link>
             </div>
         </header>

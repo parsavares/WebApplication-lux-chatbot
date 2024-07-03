@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import Signup from './components/Signup';
+import SignIn from './components/SignIn';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -14,6 +15,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<MainContent />} />
                         <Route path="/signup" element={<Signup />} />
+                        <Route path="/signin" element={<SignIn />} />
                     </Routes>
                 </div>
                 <Footer />
