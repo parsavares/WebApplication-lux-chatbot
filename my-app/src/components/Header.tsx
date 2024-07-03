@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/uni.svg'; // Ensure the logo is placed in the src/assets directory
 
 const Header: React.FC = () => {
@@ -14,8 +15,8 @@ const Header: React.FC = () => {
 
             </nav>
             <div>
-                <a href="#" className="hover:underline">Login In</a> |
-                <a href="#" className="hover:underline">Register</a>
+                <a href="#" className="hover:underline">Sign In</a> | 
+                <Link to="/signup" className="hover:underline">Sign Up</Link>
             </div>
         </header>
     );
