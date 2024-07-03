@@ -108,6 +108,8 @@ luxtutor-front/
 
 │ ├── components/
 
+│ │ ├── Signup.tsx
+
 │ │ ├── Footer.tsx
 
 │ │ ├── Header.tsx
