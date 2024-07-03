@@ -7,7 +7,7 @@ const Header: React.FC = () => {
         <header className="bg-red-500 text-white p-4 flex justify-between items-center">
             <div className="flex items-center space-x-2">
                 <img src={logo} alt="University Logo" className="h-10 w-10" />
-                <span className="text-2xl font-bold">Home</span>
+                <span className="text-2xl font-bold">L.L.L.</span>
             </div>
             <nav className="flex space-x-6">
                 <a href="https://github.com/othmane-mahfoud/luxtutor-front" target="_blank" rel="noopener noreferrer" className="hover:underline">Project</a>
