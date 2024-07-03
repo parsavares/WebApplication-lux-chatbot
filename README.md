@@ -90,7 +90,7 @@ Follow these steps to run the application in Visual Studio Code:
 
 Here is an overview of the project directory structure:
 
-luxtutor-front/
+my-app/
 
 ├── node_modules/
 
