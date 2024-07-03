@@ -98,37 +98,37 @@ my-app/
 
 ├── src/
 
-│ ├── assets/
+│   ├── assets/
 
-│ │ ├── luxembourgFlag.gif
+│   │   ├── luxembourgFlag.jpg
 
-│ │ ├── luxembourgFlag.jpg
+│   │   └── uni.svg
 
-│ │ └── uni.svg
+│   ├── components/
 
-│ ├── components/
+│   │   ├── Footer.tsx
 
-│ │ ├── Signup.tsx
+│   │   ├── Header.tsx
 
-│ │ ├── Footer.tsx
+│   │   ├── MainContent.tsx
 
-│ │ ├── Header.tsx
+│   │   ├── Signup.tsx
 
-│ │ └── MainContent.tsx
+│   │   └── SignIn.tsx
 
-│ ├── App.tsx
+│   ├── App.tsx
 
-│ ├── index.css
+│   ├── index.css
 
-│ ├── index.tsx
+│   ├── index.tsx
 
-│ ├── logo.svg
+│   ├── logo.svg
 
-│ ├── react-app-env.d.ts
+│   ├── react-app-env.d.ts
 
-│ ├── reportWebVitals.ts
+│   ├── reportWebVitals.ts
 
-│ └── setupTests.ts
+│   └── setupTests.ts
 
 ├── tailwind.config.js
 
