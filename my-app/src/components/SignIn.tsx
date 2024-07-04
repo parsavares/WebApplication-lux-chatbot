@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
+        // Mock sign-in logic
+        if (email === 'user@example.com' && password === 'password') {
+            navigate('/dashboard');
+        } else {
+            setError('Invalid email or password');
+        }
     };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
             <h2 className="text-3xl font-bold mb-8">Sign In</h2>
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+                {error && <div className="text-red-500 mb-4">{error}</div>}
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email
