@@ -66,10 +66,10 @@ const Curriculum = () => {
           <Card style={{ display: 'flex', height: '100%' }}>
             <Box style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
               <CardContent style={{ flex: '1 0 auto' }}>
-                <Typography component="div" variant="h6">
+                <Typography component="div" variant="h5">
                   {chapter.number}
                 </Typography>
-                <Typography component="div" variant="h5">
+                <Typography component="div" variant="h6">
                   {chapter.title}
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary" component="div">
