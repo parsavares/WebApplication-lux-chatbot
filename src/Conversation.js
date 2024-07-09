@@ -4,6 +4,29 @@ import SendIcon from '@mui/icons-material/Send';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
 
+const messages = [
+  {
+    id: 1,
+    sender: "agent",
+    text: "What are your preferences ?"
+  },
+  {
+    id: 2,
+    sender: "agent",
+    text: "1. Reading practice\n2. Speaking Practice\n3. Listening Practice"
+  },
+  {
+    id: 3,
+    sender: "user",
+    text: "I choose 1. Reading"
+  },
+  {
+    id: 4,
+    sender: "agent",
+    text: "Great choice let's practice your reading skills."
+  }
+]
+
 function Conversation() {
   const [isOpen, setIsOpen] = useState(true)
   const theme = useTheme()
@@ -37,10 +60,9 @@ function Conversation() {
         <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16 }}>
           <Typography variant="h6" gutterBottom>The Communicator Agent</Typography>
           <Box style={{ flex: 1, overflowY: 'auto' }}>
-            <Message sender="agent" text="ask about preferences and what the user want evel" />
-            <Message sender="agent" text="List of Preferences" />
-            <Message sender="user" text="Choose Preferences" />
-            <Message sender="agent" text="Okay check the new recommendation" />
+            {messages.map(message => (
+              <Message key={message.id} sender={message.sender} text={message.text}/>
+            ))}
           </Box>
           <Box component="form" display="flex" mt={2}>
             <TextField fullWidth variant="outlined" placeholder="Input..." />
