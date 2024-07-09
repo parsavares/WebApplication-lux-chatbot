@@ -6,7 +6,10 @@ import Curriculum from './Curriculum';
 
 function Dashboard() {
   return (
-    <Curriculum />
+    <>
+      <h1>This is the dashboard</h1>
+      <Curriculum />
+    </>
   );
 }
 
