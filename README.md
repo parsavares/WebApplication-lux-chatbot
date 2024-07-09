@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -158,7 +157,8 @@ Follow these steps to run the application in Visual Studio Code:
 
     Once the development server is running, open your browser and navigate to `http://localhost:3000`.
 
-## Project Structure
+## Project Structure (base)
+
 
 Here is an overview of the project directory structure:
 
@@ -217,6 +217,7 @@ my-app/
 └── .gitignore
 
 
+>>>>>>> luxtutor-front/my-app
 
 ## Contact
 
@@ -228,4 +229,3 @@ If you have any questions or need further assistance, please feel free to contac
 ***
 
 Thank you for using the Luxembourgish Language Learning web application!
->>>>>>> luxtutor-front/main
