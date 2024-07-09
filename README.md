@@ -69,6 +69,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 =======
+
 ﻿# Luxembourgish Language Learning Web Application (LLL)
 
 This repository contains the front-end part for the Luxembourgish Language Learning (LLL) web application. The application aims to help users learn the Luxembourgish language through various interactive features.
@@ -159,6 +160,7 @@ Follow these steps to run the application in Visual Studio Code:
 
 ## Project Structure (base)
 
+>>>>>>> luxtutor-front/my-app
 
 Here is an overview of the project directory structure:
 
