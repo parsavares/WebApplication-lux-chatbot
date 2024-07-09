@@ -1,0 +1,3 @@
+[submodule "luxtutor-front"]
+	path = luxtutor-front
+	url = ../luxtutor-front
