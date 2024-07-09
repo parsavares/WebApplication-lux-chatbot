@@ -6,6 +6,7 @@ import Curriculum from './Curriculum';
 import Container from '@mui/material/Container';
 import ProgressBar from './ProgressBar';
 import { useTheme } from '@emotion/react';
+import ChatbotButton from './ChatbotButton';
 
 function Dashboard() {
   const theme = useTheme()
@@ -38,6 +39,7 @@ function Dashboard() {
         </Container>
       </Box>
       <Curriculum />
+      <ChatbotButton />
     </>
   );
 }
