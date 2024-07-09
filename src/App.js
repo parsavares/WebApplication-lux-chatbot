@@ -1,6 +1,5 @@
 import './App.css';
 import Home from './Home';
-import TodoApp from './TodoApp';
 import Navbar from './Navbar';
 import SignIn from './SignIn';
 import { Route, Routes } from 'react-router-dom';
@@ -34,7 +33,6 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/conversation" element={<Conversation />} />
           </Route>
-          <Route path="/todos" element={<TodoApp />} />
         </Routes>
       </Paper>
     </AuthProvider>
