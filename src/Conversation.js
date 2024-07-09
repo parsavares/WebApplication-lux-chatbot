@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
 
-const messages = [
+const initialMessages = [
   {
     id: 1,
     sender: "agent",
@@ -28,17 +28,36 @@ const messages = [
 ]
 
 function Conversation() {
+  const [messages, setMessages] = useState(initialMessages)
   const [isOpen, setIsOpen] = useState(true)
+  const [input, setInput] = useState("");
   const theme = useTheme()
   const handleRecommendationChoice = (e) => {
     setIsOpen(false)
   }
+  const handleSend = () => {
+    if (input.trim()) {
+      const newMessage = {
+        id: messages.length + 1,
+        sender: "user",
+        text: input,
+      };
+      setMessages([...messages, newMessage]);
+      setInput("");
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSend();
+    }
+  };
   return (
     <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
       {/* Recommendation Section */}
-      {isOpen ? 
+      {isOpen ?
         (
-          <Grid item xs={12} md={6} style={{ borderLeft: '2px solid red', display: 'flex', flexDirection: 'column', borderRight: '2px solid red'}}>
+          <Grid item xs={12} md={6} style={{ borderLeft: '2px solid red', display: 'flex', flexDirection: 'column', borderRight: '2px solid red' }}>
             <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16, backgroundColor: theme.palette.primary.light, textAlign: "center", justifyContent: 'center', alignItems: 'center' }}>
               <Box sx={{ width: '66.66%', margin: '0 auto' }}>
                 <Typography variant="h4" gutterBottom>Recommendation for user</Typography>
@@ -50,7 +69,7 @@ function Conversation() {
             </Paper>
           </Grid>
         )
-        : 
+        :
         (
           <></>
         )
@@ -61,12 +80,19 @@ function Conversation() {
           <Typography variant="h6" gutterBottom>The Communicator Agent</Typography>
           <Box style={{ flex: 1, overflowY: 'auto' }}>
             {messages.map(message => (
-              <Message key={message.id} sender={message.sender} text={message.text}/>
+              <Message key={message.id} sender={message.sender} text={message.text} />
             ))}
           </Box>
           <Box component="form" display="flex" mt={2}>
-            <TextField fullWidth variant="outlined" placeholder="Input..." />
-            <IconButton color="secondary" type="submit"><SendIcon /></IconButton>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Input..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <IconButton color="secondary" onClick={handleSend}><SendIcon /></IconButton>
           </Box>
         </Paper>
       </Grid>
