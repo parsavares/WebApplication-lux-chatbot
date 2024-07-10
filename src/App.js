@@ -10,6 +10,7 @@ import AuthProvider from './context/AuthContext';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
 import Conversation from './Conversation';
+import Agent from './Agent';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/conversation" element={<Conversation />} />
+            <Route path="/agent" element={<Agent />} />
           </Route>
         </Routes>
       </Paper>

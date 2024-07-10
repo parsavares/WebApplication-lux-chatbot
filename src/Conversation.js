@@ -5,6 +5,7 @@ import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
+import { NavLink } from 'react-router-dom';
 
 const initialMessages = [
   {
@@ -110,11 +111,10 @@ function Conversation() {
           <Grid item xs={12} md={6} style={{ borderLeft: '2px solid red', display: 'flex', flexDirection: 'column', borderRight: '2px solid red' }}>
             <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16, backgroundColor: theme.palette.primary.light, textAlign: "center", justifyContent: 'center', alignItems: 'center' }}>
               <Box sx={{ width: '66.66%', margin: '0 auto' }}>
-                <Typography variant="h4" gutterBottom>Recommendation for user</Typography>
+                <Typography variant="h4" gutterBottom>Recommendation for User</Typography>
                 <Typography gutterBottom>Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque. Quisque est vel vulputate cursus.</Typography>
               </Box>
-
-              <Button variant="contained" color="primary" style={{ margin: 8 }} onClick={handleRecommendationChoice}>Yes Start Conversation</Button>
+              <NavLink to='/agent'><Button variant="contained" color="primary" style={{ margin: 8 }}>Yes Start Conversation</Button></NavLink>
               <Button variant="contained" color="secondary" style={{ margin: 8 }} onClick={handleRecommendationChoice}>No discuss my Preferences</Button>
             </Paper>
           </Grid>
