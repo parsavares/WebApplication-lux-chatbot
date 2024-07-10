@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Grid, Box, Button, Typography, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
@@ -34,8 +34,9 @@ function Conversation() {
   const [isOpen, setIsOpen] = useState(true);
   const [input, setInput] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioChunks, setAudioChunks] = useState([]);
+  const mediaStream = useRef(null);
+  const mediaRecorder = useRef(null);
+  const chunks = useRef([]);
   const theme = useTheme();
 
   const handleRecommendationChoice = (e) => {
@@ -61,30 +62,43 @@ function Conversation() {
     }
   };
 
-  const handleRecordVoice = async () => {
-    if (!isRecording) {
+  const startRecording = async () => {
+    try {
+      setIsRecording(true)
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      setMediaRecorder(recorder);
-      recorder.start();
-      setIsRecording(true);
-      recorder.ondataavailable = (event) => {
-        setAudioChunks((prevChunks) => [...prevChunks, event.data]);
+      mediaStream.current = stream;
+      mediaRecorder.current = new MediaRecorder(stream);
+      mediaRecorder.current.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunks.current.push(e.data);
+        }
       };
-    } else {
-      mediaRecorder.stop();
-      setIsRecording(false);
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
+      mediaRecorder.current.onstop = () => {
+        const recordedBlob = new Blob(chunks.current, { type: 'audio/webm' });
+        const url = URL.createObjectURL(recordedBlob);
         const newMessage = {
           id: messages.length + 1,
           sender: "user",
-          text: <audio controls src={audioUrl} />,
+          text: <audio controls src={url} />,
         };
-        setMessages([...messages, newMessage]);
-        setAudioChunks([]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setIsRecording(false);
+        chunks.current = [];
       };
+      mediaRecorder.current.start();
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder.current && mediaRecorder.current.state === 'recording') {
+      mediaRecorder.current.stop();
+    }
+    if (mediaStream.current) {
+      mediaStream.current.getTracks().forEach((track) => {
+        track.stop();
+      });
     }
   };
 
@@ -129,8 +143,8 @@ function Conversation() {
               onKeyDown={handleKeyDown}
             />
             <IconButton color="secondary" onClick={handleSend}><SendIcon /></IconButton>
-            <IconButton color="primary" onClick={handleRecordVoice}>
-              {isRecording ? <StopIcon /> : <MicIcon />}
+            <IconButton color="primary">
+              {isRecording ? <StopIcon onClick={stopRecording} /> : <MicIcon onClick={startRecording} />}
             </IconButton>
           </Box>
         </Paper>
