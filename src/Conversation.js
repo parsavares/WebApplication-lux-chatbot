@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Box, Button, Typography, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import MicIcon from '@mui/icons-material/Mic';
+import StopIcon from '@mui/icons-material/Stop';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
 
@@ -25,16 +27,21 @@ const initialMessages = [
     sender: "agent",
     text: "Great choice let's practice your reading skills."
   }
-]
+];
 
 function Conversation() {
-  const [messages, setMessages] = useState(initialMessages)
-  const [isOpen, setIsOpen] = useState(true)
+  const [messages, setMessages] = useState(initialMessages);
+  const [isOpen, setIsOpen] = useState(true);
   const [input, setInput] = useState("");
-  const theme = useTheme()
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioChunks, setAudioChunks] = useState([]);
+  const theme = useTheme();
+
   const handleRecommendationChoice = (e) => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
+
   const handleSend = () => {
     if (input.trim()) {
       const newMessage = {
@@ -46,12 +53,41 @@ function Conversation() {
       setInput("");
     }
   };
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleSend();
     }
   };
+
+  const handleRecordVoice = async () => {
+    if (!isRecording) {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      setMediaRecorder(recorder);
+      recorder.start();
+      setIsRecording(true);
+      recorder.ondataavailable = (event) => {
+        setAudioChunks((prevChunks) => [...prevChunks, event.data]);
+      };
+    } else {
+      mediaRecorder.stop();
+      setIsRecording(false);
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const newMessage = {
+          id: messages.length + 1,
+          sender: "user",
+          text: <audio controls src={audioUrl} />,
+        };
+        setMessages([...messages, newMessage]);
+        setAudioChunks([]);
+      };
+    }
+  };
+
   return (
     <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
       {/* Recommendation Section */}
@@ -83,7 +119,7 @@ function Conversation() {
               <Message key={message.id} sender={message.sender} text={message.text} />
             ))}
           </Box>
-          <Box component="form" display="flex" mt={2}>
+          <Box component="form" display="flex" mt={2} onSubmit={(e) => e.preventDefault()}>
             <TextField
               fullWidth
               variant="outlined"
@@ -93,6 +129,9 @@ function Conversation() {
               onKeyDown={handleKeyDown}
             />
             <IconButton color="secondary" onClick={handleSend}><SendIcon /></IconButton>
+            <IconButton color="primary" onClick={handleRecordVoice}>
+              {isRecording ? <StopIcon /> : <MicIcon />}
+            </IconButton>
           </Box>
         </Paper>
       </Grid>
