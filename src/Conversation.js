@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Grid, Box, Button, Typography, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import MicIcon from '@mui/icons-material/Mic';
+import StopIcon from '@mui/icons-material/Stop';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
 
@@ -25,16 +27,22 @@ const initialMessages = [
     sender: "agent",
     text: "Great choice let's practice your reading skills."
   }
-]
+];
 
 function Conversation() {
-  const [messages, setMessages] = useState(initialMessages)
-  const [isOpen, setIsOpen] = useState(true)
+  const [messages, setMessages] = useState(initialMessages);
+  const [isOpen, setIsOpen] = useState(true);
   const [input, setInput] = useState("");
-  const theme = useTheme()
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaStream = useRef(null);
+  const mediaRecorder = useRef(null);
+  const chunks = useRef([]);
+  const theme = useTheme();
+
   const handleRecommendationChoice = (e) => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
+
   const handleSend = () => {
     if (input.trim()) {
       const newMessage = {
@@ -46,12 +54,54 @@ function Conversation() {
       setInput("");
     }
   };
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleSend();
     }
   };
+
+  const startRecording = async () => {
+    try {
+      setIsRecording(true)
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStream.current = stream;
+      mediaRecorder.current = new MediaRecorder(stream);
+      mediaRecorder.current.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          chunks.current.push(e.data);
+        }
+      };
+      mediaRecorder.current.onstop = () => {
+        const recordedBlob = new Blob(chunks.current, { type: 'audio/webm' });
+        const url = URL.createObjectURL(recordedBlob);
+        const newMessage = {
+          id: messages.length + 1,
+          sender: "user",
+          text: <audio controls src={url} />,
+        };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setIsRecording(false);
+        chunks.current = [];
+      };
+      mediaRecorder.current.start();
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder.current && mediaRecorder.current.state === 'recording') {
+      mediaRecorder.current.stop();
+    }
+    if (mediaStream.current) {
+      mediaStream.current.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+  };
+
   return (
     <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
       {/* Recommendation Section */}
@@ -83,7 +133,7 @@ function Conversation() {
               <Message key={message.id} sender={message.sender} text={message.text} />
             ))}
           </Box>
-          <Box component="form" display="flex" mt={2}>
+          <Box component="form" display="flex" mt={2} onSubmit={(e) => e.preventDefault()}>
             <TextField
               fullWidth
               variant="outlined"
@@ -93,6 +143,9 @@ function Conversation() {
               onKeyDown={handleKeyDown}
             />
             <IconButton color="secondary" onClick={handleSend}><SendIcon /></IconButton>
+            <IconButton color="primary">
+              {isRecording ? <StopIcon onClick={stopRecording} /> : <MicIcon onClick={startRecording} />}
+            </IconButton>
           </Box>
         </Paper>
       </Grid>
