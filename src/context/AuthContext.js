@@ -12,14 +12,14 @@ const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const signUp = (firstName, lastName, email, password) => {
+    const signUp = (userData) => {
         return new Promise((resolve, reject) => {
             let users = JSON.parse(localStorage.getItem('users')) || [];
-            const userExists = users.find(user => user.email === email);
+            const userExists = users.find(user => user.email === userData.email);
             if (userExists) {
                 reject(new Error('User already exists'));
             } else {
-                const newUser = { id: Date.now().toString(), firstName, lastName, email, password };
+                const newUser = { id: Date.now().toString(), ...userData };
                 users.push(newUser);
                 localStorage.setItem('users', JSON.stringify(users));
                 localStorage.setItem('currentUser', JSON.stringify(newUser));
@@ -48,10 +48,10 @@ const AuthProvider = ({ children }) => {
         setCurrentUser(null);
     };
 
-    const updateProfile = (firstName, lastName) => {
+    const updateProfile = (updatedUserData) => {
         return new Promise((resolve, reject) => {
             let users = JSON.parse(localStorage.getItem('users')) || [];
-            const updatedUser = { ...currentUser, firstName, lastName };
+            const updatedUser = { ...currentUser, ...updatedUserData };
             const userIndex = users.findIndex(user => user.email === currentUser.email);
 
             if (userIndex !== -1) {
