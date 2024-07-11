@@ -32,7 +32,8 @@ function Agent() {
     const [isRecording, setIsRecording] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState("");
-    const [questions, setQuestions] = useState(initialQuestions);
+    const [unansweredQuestions, setUnansweredQuestions] = useState(initialQuestions);
+    const [answeredQuestions, setAnsweredQuestions] = useState([]);
     const [showSuccess, setShowSuccess] = useState(false);
     const [showFailure, setShowFailure] = useState(false);
     const mediaStream = useRef(null);
@@ -84,19 +85,21 @@ function Agent() {
     };
 
     const handleNextQuestion = () => {
-        const nextQuestionIndex = questions.findIndex(q => !q.answered);
-        setCurrentQuestion(nextQuestionIndex);
-        setSelectedAnswer("");
+        setCurrentQuestion((currentQuestion + 1) % unansweredQuestions.length)
     };
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
     };
 
+    
+
     const handleSubmit = () => {
-        if (selectedAnswer === questions[currentQuestion].correctAnswer) {
-            const updatedQuestions = questions.map((q, index) => (index === currentQuestion ? { ...q, answered: true } : q));
-            setQuestions(updatedQuestions);
+        if (selectedAnswer === unansweredQuestions[currentQuestion].correctAnswer) {
+            unansweredQuestions[currentQuestion].answered = true 
+            setAnsweredQuestions((prevAnsweredQuestions) => [...prevAnsweredQuestions, unansweredQuestions[currentQuestion]]);
+            const updatedQuestions = unansweredQuestions.filter(q => !q.answered);
+            setUnansweredQuestions(updatedQuestions);
             setShowSuccess(true);
             handleNextQuestion();
             setTimeout(() => setShowSuccess(false), 2000);
@@ -107,8 +110,6 @@ function Agent() {
             setTimeout(() => setShowFailure(false), 2000);
         }
     };
-
-    const unansweredQuestions = questions.filter(q => !q.answered);
 
     return (
         <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
@@ -138,10 +139,10 @@ function Agent() {
                         <Typography variant="h5" gutterBottom>Practice</Typography>
                         {unansweredQuestions.length > 0 ? (
                             <Paper sx={{ p: 2 }}>
-                                <Typography variant="h6">{questions[currentQuestion].question}</Typography>
+                                <Typography variant="h6">{unansweredQuestions[currentQuestion].question}</Typography>
                                 <FormControl component="fieldset">
                                     <RadioGroup value={selectedAnswer} onChange={handleAnswerChange}>
-                                        {questions[currentQuestion].choices.map((choice, index) => (
+                                        {unansweredQuestions[currentQuestion].choices.map((choice, index) => (
                                             <FormControlLabel key={index} value={choice} control={<Radio />} label={choice} />
                                         ))}
                                     </RadioGroup>
