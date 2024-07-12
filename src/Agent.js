@@ -19,23 +19,16 @@ const initialQuestions = [
     { id: 2, question: "How do you say 'Thank you' in Luxembourgish?", choices: ["Merci", "Danke", "Grazie", "Gracias"], correctAnswer: "Merci", answered: false }
 ];
 
-const initialExamples = [
-    { id: 1, image: "https://via.placeholder.com/150?text=Example", caption: "Dialog between two people - Example" },
-    { id: 2, image: "https://via.placeholder.com/150?text=Example", caption: "Dialog between two people - Example" },
-    { id: 3, image: "https://via.placeholder.com/150?text=Example", caption: "Dialog between two people - Example" },
-    { id: 4, image: "https://via.placeholder.com/150?text=Example", caption: "Dialog between two people - Example" }
-]
-
 function Agent() {
     const [messages, setMessages] = useState(initialMessages);
     const [input, setInput] = useState("");
     const [isRecording, setIsRecording] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState("");
     const [unansweredQuestions, setUnansweredQuestions] = useState(initialQuestions);
-    const [answeredQuestions, setAnsweredQuestions] = useState([]);
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [showFailure, setShowFailure] = useState(false);
+    const [selectedAnswer, setSelectedAnswer] = useState("");
+    const [questions, setQuestions] = useState(initialQuestions);
+    const [showAlert, setShowAlert] = useState(false);
+    const [showError, setShowError] = useState(false);
     const mediaStream = useRef(null);
     const mediaRecorder = useRef(null);
     const chunks = useRef([]);
@@ -85,31 +78,37 @@ function Agent() {
     };
 
     const handleNextQuestion = () => {
-        setCurrentQuestion((currentQuestion + 1) % unansweredQuestions.length)
+        // const nextQuestionIndex = questions.findIndex(q => !q.answered);
+        const nextQuestionIndex = currentQuestion + 1
+        setCurrentQuestion(nextQuestionIndex);
+        setSelectedAnswer("");
     };
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
     };
 
-    
-
     const handleSubmit = () => {
-        if (selectedAnswer === unansweredQuestions[currentQuestion].correctAnswer) {
-            unansweredQuestions[currentQuestion].answered = true 
-            setAnsweredQuestions((prevAnsweredQuestions) => [...prevAnsweredQuestions, unansweredQuestions[currentQuestion]]);
-            const updatedQuestions = unansweredQuestions.filter(q => !q.answered);
-            setUnansweredQuestions(updatedQuestions);
-            setShowSuccess(true);
-            handleNextQuestion();
-            setTimeout(() => setShowSuccess(false), 2000);
+        if (selectedAnswer === questions[currentQuestion].correctAnswer) {
+            // const updatedQuestions = questions.map((q, index) => (index === currentQuestion ? { ...q, answered: true } : q));
+            // setQuestions(updatedQuestions);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 2000);
+            // setUnansweredQuestions(updatedQuestions.filter(q => !q.answered))
+            if (currentQuestion < unansweredQuestions.length) {
+                handleNextQuestion();
+            }   
         }
         else {
-            setShowFailure(true);
-            handleNextQuestion();
-            setTimeout(() => setShowFailure(false), 2000);
+            setShowError(true);
+            setTimeout(() => setShowError(false), 2000);
+            if (currentQuestion < unansweredQuestions.length) {
+                handleNextQuestion();
+            }   
         }
     };
+
+    // const unansweredQuestions = questions.filter(q => !q.answered);
 
     return (
         <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
@@ -123,12 +122,12 @@ function Agent() {
                     <Box sx={{ mt: 4 }}>
                         <Typography variant="h5" gutterBottom>Examples</Typography>
                         <Grid container spacing={2} justifyContent="center">
-                            {initialExamples.map((example, index) => (
-                                <Grid item xs={6} sm={6} key={example.id}>
+                            {[1, 2, 3, 4].map((example) => (
+                                <Grid item xs={6} sm={3} key={example}>
                                     <Card>
-                                        <CardMedia component="img" height="140" image={`${example.image}+${index + 1}`} alt={`${example.caption}`} />
+                                        <CardMedia component="img" height="140" image={`https://via.placeholder.com/150?text=Example+${example}`} alt={`Example ${example}`} />
                                         <CardContent>
-                                            <Typography variant="body2" color="textSecondary">{`${example.caption} ${index + 1}`}</Typography>
+                                            <Typography variant="body2" color="textSecondary">Dialog between two people Example {example}</Typography>
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -137,7 +136,7 @@ function Agent() {
                     </Box>
                     <Box sx={{ mt: 4 }}>
                         <Typography variant="h5" gutterBottom>Practice</Typography>
-                        {unansweredQuestions.length > 0 ? (
+                        {currentQuestion != unansweredQuestions.length ? (
                             <Paper sx={{ p: 2 }}>
                                 <Typography variant="h6">{unansweredQuestions[currentQuestion].question}</Typography>
                                 <FormControl component="fieldset">
@@ -158,10 +157,10 @@ function Agent() {
                                 <Typography variant="h6">You're all done, great job!</Typography>
                             </Box>
                         )}
-                        {showSuccess && (
+                        {showAlert && (
                             <Alert severity="success" sx={{ mt: 2 }}>Correct answer!</Alert>
                         )}
-                        {showFailure && (
+                        {showError && (
                             <Alert severity="error" sx={{ mt: 2 }}>Wrong answer!</Alert>
                         )}
                     </Box>
@@ -171,7 +170,7 @@ function Agent() {
             {/* Chat Section */}
             <Grid item xs={12} md={6} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16 }}>
-                    <Typography variant="h6" gutterBottom>The Conversation and Reading Agent</Typography>
+                    <Typography variant="h6" gutterBottom>The Communicator Agent</Typography>
                     <Box style={{ flex: 1, overflowY: 'auto' }}>
                         {messages.map(message => (
                             <Message key={message.id} sender={message.sender} text={message.text} />
