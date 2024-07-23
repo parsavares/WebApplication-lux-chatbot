@@ -1,5 +1,5 @@
-import React from 'react';
-import { Grid, Typography, Box, Accordion, AccordionSummary, AccordionDetails, CircularProgress, Chip, Divider } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, Typography, Box, Accordion, AccordionSummary, AccordionDetails, CircularProgress, Chip, Divider, Modal, Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { theme } from './theme';
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -11,6 +11,7 @@ const chapters = [
     title: "Moien! …an Äddi!",
     description: "Learn basic greetings and farewells in Luxembourgish.",
     progress: 100,
+    feedback: "Great job! You've completed all the greetings. You were able to do all the exercises related to Moien, Äddi and Gudden Owend without any mistakes, you can now greet people in Luxembourg with confidence!",
     topics: [
       { name: "Moien!", status: "Done" },
       { name: "Äddi!", status: "Done" },
@@ -22,6 +23,7 @@ const chapters = [
     title: "Wéi geet et?",
     description: "Asking and responding to 'How are you?' in Luxembourgish.",
     progress: 60,
+    feedback: "You're doing well, but you still have some topics to cover in this chapter, keep practicing the responses for Et geet, Merci! and get started on Net esou gutt.",
     topics: [
       { name: "Wéi geet et?", status: "Done" },
       { name: "Et geet, Merci!", status: "In Progress" },
@@ -33,6 +35,7 @@ const chapters = [
     title: "Wéi heescht Dir?",
     description: "Introducing yourself and asking for someone's name.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Wéi heescht Dir?", status: "Upcoming" },
       { name: "Ech heeschen...", status: "Upcoming" },
@@ -44,6 +47,7 @@ const chapters = [
     title: "Meng Famill",
     description: "Talking about family members and relationships.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Meng Famill", status: "Upcoming" },
       { name: "Meng Elteren", status: "Upcoming" },
@@ -55,6 +59,7 @@ const chapters = [
     title: "Meng Frënn",
     description: "Describing friends and friendships.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Meng Frënn", status: "Upcoming" },
       { name: "Beschreiw däi Frënd", status: "Upcoming" },
@@ -66,6 +71,7 @@ const chapters = [
     title: "Ech ginn akafen",
     description: "Shopping vocabulary and phrases.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Ech ginn akafen", status: "Upcoming" },
       { name: "Am Supermarché", status: "Upcoming" },
@@ -77,6 +83,7 @@ const chapters = [
     title: "Meng Aarbecht",
     description: "Talking about your job and workplace.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Meng Aarbecht", status: "Upcoming" },
       { name: "Ech sinn e Léierin", status: "Upcoming" },
@@ -88,6 +95,7 @@ const chapters = [
     title: "Meng Fräizäit",
     description: "Discussing hobbies and leisure activities.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Meng Fräizäit", status: "Upcoming" },
       { name: "Sport", status: "Upcoming" },
@@ -99,6 +107,7 @@ const chapters = [
     title: "Beim Dokter",
     description: "Describing symptoms and visiting the doctor.",
     progress: 0,
+    feedback: "",
     topics: [
       { name: "Beim Dokter", status: "Upcoming" },
       { name: "Meng Symptomer", status: "Upcoming" },
@@ -107,9 +116,17 @@ const chapters = [
   }
 ];
 
-
-
 const Curriculum = () => {
+  const [open, setOpen] = useState(false);
+  const [currentFeedback, setCurrentFeedback] = useState("");
+
+  const handleOpen = (feedback) => {
+    setCurrentFeedback(feedback);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Done":
@@ -139,17 +156,14 @@ const Curriculum = () => {
                   <Typography variant="subtitle1">{chapter.title}</Typography>
                   <Typography paragraph color="text.secondary">{chapter.description}</Typography>
                 </Box>
-                {/* <CircularProgress
-                  variant="determinate"
-                  value={chapter.progress}
-                  sx={{
-                    color: theme.palette.text.secondary
-                  }}
-                /> */}
-                <div style={{ width: 80, height: 80 }}>
-                  <CircularProgressbar value={chapter.progress} text={`${chapter.progress}%`} />
-                </div>
-                
+                <Box display="flex" alignItems="center">
+                  {chapter.progress > 0 && chapter.feedback && (
+                    <Button variant="outlined" style={{ marginRight: 10 }} onClick={() => handleOpen(chapter.feedback)}>Show Feedback</Button>
+                  )}
+                  <div style={{ width: 80, height: 80, marginRight: 16 }}>
+                    <CircularProgressbar value={chapter.progress} text={`${chapter.progress}%`} />
+                  </div>
+                </Box>
               </Box>
             </AccordionSummary>
             <AccordionDetails>
@@ -173,9 +187,18 @@ const Curriculum = () => {
           </Accordion>
         </Grid>
       ))}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+          <Typography variant="h6" component="h2" style={{ textAlign: "center" }} >
+            Chapter Feedback
+          </Typography>
+          <Typography sx={{ mt: 2 }}>
+            {currentFeedback}
+          </Typography>
+        </Box>
+      </Modal>
     </Grid>
   );
 };
 
 export default Curriculum;
-
