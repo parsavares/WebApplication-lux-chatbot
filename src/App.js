@@ -32,8 +32,8 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/conversation" element={<Conversation />} />
-            <Route path="/agent" element={<Agent />} />
+            <Route path="/conversation" element={<Agent />} />
+            {/* <Route path="/agent" element={<Agent />} /> */}
           </Route>
         </Routes>
       </Paper>

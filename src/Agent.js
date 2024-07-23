@@ -8,10 +8,33 @@ import Message from './Message';
 import { useTheme } from '@emotion/react';
 
 const initialMessages = [
-    { id: 1, sender: "agent", text: "Hello today we are going to learn about greetings in Luxembourgish" },
-    { id: 2, sender: "agent", text: "Let's start with a basic question: How do we say 'Hello' in Luxembourgish" },
-    { id: 3, sender: "user", text: "Moien" },
-    { id: 4, sender: "agent", text: "That's correct, good job!" }
+    {
+        id: 1,
+        sender: "communicator",
+        text: "What are your preferences ?"
+    },
+    {
+        id: 2,
+        sender: "communicator",
+        text: "1. Reading practice\n2. Conversation Practice\n3. Listening Practice"
+    },
+    {
+        id: 3,
+        sender: "user",
+        text: "I choose 2. conversation"
+    },
+    {
+        id: 4,
+        sender: "communicator",
+        text: "Great choice let's practice your reading skills."
+    },
+    { id: 5, sender: "conversational", text: "Hello today we are going to learn about greetings in Luxembourgish" },
+    { id: 6, sender: "conversational", text: "Let's start with a basic question: How do we say 'Hello' in Luxembourgish" },
+    { id: 7, sender: "user", text: "Moien" },
+    { id: 8, sender: "conversational", text: "That's correct, good job!" },
+    { id: 9, sender: "communicator", text: "Now let's practice reading okay?" },
+    { id: 10, sender: "user", text: "Yes!" },
+    { id: 11, sender: "reader", text: "Read the following sentence and explain what it means: Ech sinn d’Christine Dupont.Ech si Franséisin. Ech kommenaus Frankräich, vu Metz. " }
 ];
 
 const initialQuestions = [
@@ -97,14 +120,14 @@ function Agent() {
             // setUnansweredQuestions(updatedQuestions.filter(q => !q.answered))
             if (currentQuestion < unansweredQuestions.length) {
                 handleNextQuestion();
-            }   
+            }
         }
         else {
             setShowError(true);
             setTimeout(() => setShowError(false), 2000);
             if (currentQuestion < unansweredQuestions.length) {
                 handleNextQuestion();
-            }   
+            }
         }
     };
 
@@ -116,16 +139,16 @@ function Agent() {
             <Grid item xs={12} md={6} style={{ borderLeft: '2px solid red', display: 'flex', flexDirection: 'column', borderRight: '2px solid red' }}>
                 <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16, backgroundColor: "#fffde7", textAlign: "center", justifyContent: 'center', alignItems: 'center' }}>
                     <Box sx={{ width: '66.66%', margin: '0 auto' }}>
-                        <Typography variant="h4" gutterBottom>Dynamic Practice Section</Typography>
+                        <Typography variant="h4" gutterBottom>Book Review</Typography>
                         <Typography gutterBottom>Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque. Quisque est vel vulputate cursus. Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque. Quisque est vel vulputate cursus.</Typography>
                     </Box>
-                    <Box sx={{ mt: 4 }}>
+                    <Box sx={{ mt: 4 }} style={{ paddingLeft: 100, paddingRight: 100 }}>
                         <Typography variant="h5" gutterBottom>Examples</Typography>
                         <Grid container spacing={2} justifyContent="center">
                             {[1, 2, 3, 4].map((example) => (
-                                <Grid item xs={6} sm={3} key={example}>
+                                <Grid item xs={6} sm={6} key={example}>
                                     <Card>
-                                        <CardMedia component="img" height="140" image={`https://via.placeholder.com/150?text=Example+${example}`} alt={`Example ${example}`} />
+                                        <CardMedia component="img" height={250} image={`https://via.placeholder.com/150?text=Example+${example}`} alt={`Example ${example}`} />
                                         <CardContent>
                                             <Typography variant="body2" color="textSecondary">Dialog between two people Example {example}</Typography>
                                         </CardContent>
@@ -134,7 +157,7 @@ function Agent() {
                             ))}
                         </Grid>
                     </Box>
-                    <Box sx={{ mt: 4 }}>
+                    {/* <Box sx={{ mt: 4 }}>
                         <Typography variant="h5" gutterBottom>Practice</Typography>
                         {currentQuestion != unansweredQuestions.length ? (
                             <Paper sx={{ p: 2 }}>
@@ -163,14 +186,14 @@ function Agent() {
                         {showError && (
                             <Alert severity="error" sx={{ mt: 2 }}>Wrong answer!</Alert>
                         )}
-                    </Box>
+                    </Box> */}
                 </Paper>
             </Grid>
 
             {/* Chat Section */}
             <Grid item xs={12} md={6} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Paper style={{ flex: 1, display: 'flex', flexDirection: 'column', margin: 16, padding: 16 }}>
-                    <Typography variant="h6" gutterBottom>The Communicator Agent</Typography>
+                    <Typography variant="h6" gutterBottom>Conversation</Typography>
                     <Box style={{ flex: 1, overflowY: 'auto' }}>
                         {messages.map(message => (
                             <Message key={message.id} sender={message.sender} text={message.text} />
