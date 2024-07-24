@@ -113,31 +113,6 @@ Follow these steps to set up the project on your local machine:
     npm install
     ```
 
-3. **Set up TailwindCSS**:
-
-    Ensure your `tailwind.config.js` file looks like this:
-
-    ```javascript
-    /** @type {import('tailwindcss').Config} */
-    module.exports = {
-      content: [
-        "./src/**/*.{js,ts,jsx,tsx}",
-      ],
-      theme: {
-        extend: {},
-      },
-      plugins: [],
-    }
-    ```
-
-    Ensure your `src/index.css` file includes the TailwindCSS directives:
-
-    ```css
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    ```
-
 ## Running the Application
 
 Follow these steps to run the application in Visual Studio Code:
@@ -160,66 +135,6 @@ Follow these steps to run the application in Visual Studio Code:
 
     Once the development server is running, open your browser and navigate to `http://localhost:3000`.
 
-## Project Structure (base)
-
->>>>>>> luxtutor-front/my-app
-
-Here is an overview of the project directory structure:
-
-my-app/
-
-├── node_modules/
-
-├── public/
-
-├── src/
-
-│   ├── assets/
-
-│   │   ├── luxembourgFlag.jpg
-
-│   │   └── uni.svg
-
-│   ├── components/
-
-│   │   ├── Footer.tsx
-
-│   │   ├── Header.tsx
-
-│   │   ├── MainContent.tsx
-
-│   │   ├── Signup.tsx
-
-│   │   └── SignIn.tsx
-
-│   ├── App.tsx
-
-│   ├── index.css
-
-│   ├── index.tsx
-
-│   ├── logo.svg
-
-│   ├── react-app-env.d.ts
-
-│   ├── reportWebVitals.ts
-
-│   └── setupTests.ts
-
-├── tailwind.config.js
-
-├── package.json
-
-├── tsconfig.json
-
-├── postcss.config.js
-
-├── README.md
-
-├── package-lock.json
-
-└── .gitignore
-
 
 >>>>>>> luxtutor-front/my-app
 
@@ -227,8 +142,8 @@ my-app/
 
 If you have any questions or need further assistance, please feel free to contact us:
 
-- Parsa Vares: [parsa.vares@uni.lu](mailto:parsa.vares@uni.lu)
 - Othmane Mahfoud: [othmane.mahfoud.001@student.uni.lu](mailto:othmane.mahfoud.001@student.uni.lu)
+- Parsa Vares: [parsa.vares@uni.lu](mailto:parsa.vares@uni.lu)
 
 ***
 
