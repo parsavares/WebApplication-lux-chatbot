@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Grid, Box, Button, Typography, TextField, Paper, IconButton, Card, CardMedia, CardContent, Radio, RadioGroup, FormControlLabel, FormControl, Alert } from '@mui/material';
+import React, { useState, useRef, useEffect } from 'react';
+import { Grid, Box, Typography, TextField, Paper, IconButton, Card, CardMedia, CardContent } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
 
@@ -43,7 +42,7 @@ const initialQuestions = [
 ];
 
 function Agent() {
-    const [messages, setMessages] = useState(initialMessages);
+    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [isRecording, setIsRecording] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -56,6 +55,17 @@ function Agent() {
     const mediaRecorder = useRef(null);
     const chunks = useRef([]);
     const theme = useTheme();
+
+    // I added this hook to find messages on component load
+    useEffect(() => {
+        const savedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+        setMessages(savedMessages);
+    }, []);
+
+    // Whenever the state of messages will change I will add them to local storage
+    useEffect(() => {
+        localStorage.setItem('messages', JSON.stringify(messages));
+    }, [messages]);
 
     const handleSend = () => {
         if (input.trim()) {
@@ -131,8 +141,6 @@ function Agent() {
         }
     };
 
-    // const unansweredQuestions = questions.filter(q => !q.answered);
-
     return (
         <Grid container spacing={2} mt={4} style={{ height: '90vh' }} justifyContent="center">
             {/* Recommendation Section */}
@@ -157,36 +165,6 @@ function Agent() {
                             ))}
                         </Grid>
                     </Box>
-                    {/* <Box sx={{ mt: 4 }}>
-                        <Typography variant="h5" gutterBottom>Practice</Typography>
-                        {currentQuestion != unansweredQuestions.length ? (
-                            <Paper sx={{ p: 2 }}>
-                                <Typography variant="h6">{unansweredQuestions[currentQuestion].question}</Typography>
-                                <FormControl component="fieldset">
-                                    <RadioGroup value={selectedAnswer} onChange={handleAnswerChange}>
-                                        {unansweredQuestions[currentQuestion].choices.map((choice, index) => (
-                                            <FormControlLabel key={index} value={choice} control={<Radio />} label={choice} />
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                    <Button variant="contained" color="primary" onClick={handleSubmit}>Submit</Button>
-                                    <Button variant="contained" color="secondary" onClick={handleNextQuestion} sx={{ ml: 2 }}>Next</Button>
-                                </Box>
-                            </Paper>
-                        ) : (
-                            <Box sx={{ textAlign: 'center', mt: 4 }}>
-                                <CheckCircleIcon style={{ fontSize: 50, color: theme.palette.success.main }} />
-                                <Typography variant="h6">You're all done, great job!</Typography>
-                            </Box>
-                        )}
-                        {showAlert && (
-                            <Alert severity="success" sx={{ mt: 2 }}>Correct answer!</Alert>
-                        )}
-                        {showError && (
-                            <Alert severity="error" sx={{ mt: 2 }}>Wrong answer!</Alert>
-                        )}
-                    </Box> */}
                 </Paper>
             </Grid>
 
