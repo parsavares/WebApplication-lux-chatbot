@@ -5,6 +5,8 @@ import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
 import Message from './Message';
 import { useTheme } from '@emotion/react';
+import axios from 'axios';
+
 
 const initialMessages = [
     {
@@ -60,6 +62,43 @@ function Agent() {
     useEffect(() => {
         const savedMessages = JSON.parse(localStorage.getItem('messages')) || [];
         setMessages(savedMessages);
+    }, []);
+
+
+    useEffect(() => {
+        const fetchAIMessage = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/getAIMessage');
+                console.log(response)
+                const newMessage = {
+                    sender: response.data.agent_name, 
+                    text: response.data.content
+                }
+                console.log(newMessage)
+                setMessages(prevMessages => [...prevMessages, newMessage]);
+
+            } catch (error) {
+                console.error('Error fetching AI message:', error);
+            }
+        };
+
+        const acknowledgeMessage = async () => {
+            try {
+                const response = await axios.post('http://localhost:8000/acknowledgeMessage',
+                    {
+                        "ack": true
+                    }
+                );
+                const responseMessage = response.data.message
+                console.log(responseMessage)
+            } catch (error) {
+                console.error('Error acknowledging AI message:', error);
+            }
+        }
+
+        fetchAIMessage()
+        acknowledgeMessage()
+
     }, []);
 
     // Whenever the state of messages will change I will add them to local storage
