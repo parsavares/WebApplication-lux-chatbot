@@ -64,37 +64,37 @@ function Agent() {
         setMessages(savedMessages);
     }, []);
 
+    const fetchAIMessage = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/getAIMessage');
+            console.log(response)
+            const newMessage = {
+                sender: response.data.agent_name, 
+                text: response.data.content
+            }
+            console.log(newMessage)
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+
+        } catch (error) {
+            console.error('Error fetching AI message:', error);
+        }
+    };
+
+    const acknowledgeMessage = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/acknowledgeMessage',
+                {
+                    "ack": true
+                }
+            );
+            const responseMessage = response.data.message
+            console.log(responseMessage)
+        } catch (error) {
+            console.error('Error acknowledging AI message:', error);
+        }
+    }
 
     useEffect(() => {
-        const fetchAIMessage = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/getAIMessage');
-                console.log(response)
-                const newMessage = {
-                    sender: response.data.agent_name, 
-                    text: response.data.content
-                }
-                console.log(newMessage)
-                setMessages(prevMessages => [...prevMessages, newMessage]);
-
-            } catch (error) {
-                console.error('Error fetching AI message:', error);
-            }
-        };
-
-        const acknowledgeMessage = async () => {
-            try {
-                const response = await axios.post('http://localhost:8000/acknowledgeMessage',
-                    {
-                        "ack": true
-                    }
-                );
-                const responseMessage = response.data.message
-                console.log(responseMessage)
-            } catch (error) {
-                console.error('Error acknowledging AI message:', error);
-            }
-        }
 
         fetchAIMessage()
         acknowledgeMessage()
@@ -106,11 +106,28 @@ function Agent() {
         localStorage.setItem('messages', JSON.stringify(messages));
     }, [messages]);
 
+    const sendUserInput = async (userInput) => {
+        try {
+            const response = await axios.post('http://localhost:8000/userInput',
+                {
+                    "content": userInput
+                }
+            );
+            const responseMessage = response.data.message
+            console.log(responseMessage)
+        } catch (error) {
+            console.error('Error Sending User Input:', error);
+        }
+    }
+
     const handleSend = () => {
         if (input.trim()) {
+            sendUserInput(input)
             const newMessage = { id: messages.length + 1, sender: "user", text: input };
             setMessages([...messages, newMessage]);
             setInput("");
+            fetchAIMessage()
+            acknowledgeMessage()
         }
     };
 
