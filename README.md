@@ -136,7 +136,7 @@ Follow these steps to run the application in Visual Studio Code:
     Once the development server is running, open your browser and navigate to `http://localhost:3000`.
 
 
->>>>>>> luxtutor-front/my-app
+>>>>>>> WebApplication-lux-chatbot/my-app
 
 ## Contact
 
