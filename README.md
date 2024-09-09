@@ -10,6 +10,7 @@ This repository contains the **frontend** for the Luxembourgish Language Learnin
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [Screenshots](#screenshots)
+- [Future work](#Future-work)
 - [Contact](#contact)
 
 ## Overview
@@ -88,6 +89,16 @@ Follow these steps to set up the project locally:
 
 ### Conversation Page
 ![Conversation Page](./WebApplication-lux-chatbot/conversation-page.png)
+
+## Future work
+    The following list of tasks that still need to be completed or improved:
+
+- Connect the progress tracking functionality from the backend with the frontend
+- Implement dynamic images
+- Address prompt engineering issues in the backend (such as Markdown in messages, and User Response displayed by the chatbot)
+- Fix the issue with the messages between the communicator and orchester agents being displayed as messages to the user
+- Resolve prompt engineering issues between the tracker and tutor agent, as well as the tutor agent's content retrieval tool (an issue previously occurred with Meryem and Titouan; consider fine-tuning the tutor agent as Meryem already suggested)
+- Implement database on the backend to replace the current localStorage used to persist history at the browser level.
 
 ## Contact
 
