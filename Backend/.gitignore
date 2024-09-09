@@ -1,0 +1,7 @@
+.env
+*.wav
+*.pth
+mma_env/
+upd_env/
+testing_env/
+__pycache__/

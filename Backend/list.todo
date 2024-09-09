@@ -1,0 +1,57 @@
+Ctrl+enter for new task, Alt+d for done
+
+----------------------------------------
+
+BUGS THAT NEED TO BE FIXED:
+☐ openai.InternalServerError: Error code: 500 - 
+  {'error': {'message': 'The model produced invalid content. Consider modifying your prompt 
+  if you are seeing this error persistently.', 'type': 'model_error', 'param': None, 'code': None}}
+  -> Apparently this is a openai problem, see link
+  https://community.openai.com/t/error-the-model-produced-invalid-content/747511/6
+
+☐ in the routers: add timer to send aimessage again if no ack was recieved
+
+PROJECT STEP 1:
+
+✔ define task distrubution for different teaching agents @done (7/2/2024, 3:19:51 PM)
+    -t: conversational, reading
+    -m: listening, QA, GrammarSummary
+    -common: tracker, orchestrator, communicator TBD 
+
+☐ implement basic version of this: https://www.softgrade.org/sse-with-fastapi-react-langgraph/
+
+☐ error handling to deal with hallucinations @critical 
+
+☐ add to folder existing uml diagrams @low 
+
+☐ conversational: prompt rework, focus on conversational aspect (not just teaching a lesson)
+
+☐ orchestrator: optimize speed of tool (too slow atm, 40sec to a min sometimes for chunk seperation)
+
+☐ orchestrator: modify tool to retrieve from vector store instead of .txt file
+
+☐ tracker: implement/modify report creation tool to write report in json file
+
+✔ tracker: prompt engineering @done (7/10/2024, 4:20:18 PM)
+
+☐ communicator: create agent/node structure with user communication feature
+
+✔ create one shared global list: written by orchester and read by tutor agent (content of all lessons) @done (7/4/2024, 5:36:33 PM)
+
+☐ ISSUE: occasionally langgraph doesnt display the AI message as intented -> asks for input but doesnt show the generate prompt first 
+
+☐ create @tool that checks if all tutors where executed -> consequence: create final report and end
+
+✔ join/create slack channel @done (7/2/2024, 3:24:51 PM)
+
+✔ restructure to get a graph for single chatbot @high @done (7/4/2024, 10:30:29 AM)
+
+✔ design uml diagram for conversational diagram @done (7/2/2024, 3:22:17 PM)
+
+✔ create Github repo @critical @done (7/4/2024, 10:30:24 AM)
+
+✔ add raw dataset to folder @critical @done (7/9/2024, 3:13:13 PM)
+
+✔ test prompt in luxembourgish instead of english @high @done (7/9/2024, 3:13:16 PM)
+
+☐ work on methodology section of report @low 
