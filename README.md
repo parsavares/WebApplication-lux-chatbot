@@ -39,7 +39,7 @@ This project uses a variety of modern web technologies:
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-- **Node.js**: Version 14.x or higher.
+- **Node.js**: Version 14.x or higher.[LINK](https://nodejs.org/en)
 - **npm**: The package manager for JavaScript.
 - **Visual Studio Code**: A powerful code editor for developing the project.
 
