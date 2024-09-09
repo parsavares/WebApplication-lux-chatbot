@@ -82,13 +82,13 @@ Follow these steps to set up the project locally:
 ## Screenshots
 
 ### Home Page
-![Home Page](./WebApplication-lux-chatbot/home-page.png)
+![Home Page](./home-page.png)
 
 ### Dashboard
-![Dashboard](./WebApplication-lux-chatbot/dashboard.png)
+![Dashboard](./dashboard.png)
 
 ### Conversation Page
-![Conversation Page](./WebApplication-lux-chatbot/conversation-page.png)
+![Conversation Page](./conversation-page.png)
 
 ## Future work
 
