@@ -91,7 +91,8 @@ Follow these steps to set up the project locally:
 ![Conversation Page](./WebApplication-lux-chatbot/conversation-page.png)
 
 ## Future work
-    The following list of tasks that still need to be completed or improved:
+
+The following list of tasks that still need to be completed or improved:
 
 - Connect the progress tracking functionality from the backend with the frontend
 - Implement dynamic images
