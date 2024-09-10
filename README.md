@@ -7,9 +7,9 @@ This repository contains the **frontend** for the Luxembourgish Language Learnin
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
+- [Installation*](#installation)
+- [Running the Application*](#running-the-application)
 - [Setup with Yarn](#Setup-with-Yarn)
-- [Running the Application](#running-the-application)
 - [Screenshots](#screenshots)
 - [Future work](#Future-work)
 - [Contact](#contact)
@@ -60,6 +60,30 @@ Follow these steps to set up the project locally:
     npm install
     ```
 
+
+
+
+## Running the Application
+
+1. **Open the project in Visual Studio Code**:
+
+    ```bash
+    code .
+    ```
+
+2. **Start the development server**:
+
+    In the integrated terminal of Visual Studio Code, run the following command:
+
+    ```bash
+    npm start
+    ```
+
+3. **Access the app in your browser**:
+
+    Once the development server is running, open your browser and go to [http://localhost:3000](http://localhost:3000) to see the app in action.
+
+
 ## Setup with Yarn
 
 To install dependencies and run the project using Yarn, follow these steps:
@@ -94,26 +118,31 @@ To install dependencies and run the project using Yarn, follow these steps:
 For more information on using Yarn, visit the [official Yarn documentation](https://yarnpkg.com/).
 
 
+Here's the part you requested in markdown format:
 
-## Running the Application
 
-1. **Open the project in Visual Studio Code**:
+### Post-Installation Notes(Yarn)
 
-    ```bash
-    code .
-    ```
+1. **Mixed Lockfiles**:  
+   Your project contains both `yarn.lock` and `package-lock.json`. Since you're using Yarn, it's recommended to stick with one package manager to avoid resolution inconsistencies. You can safely delete the `package-lock.json` file to prevent conflicts:
+   ```bash
+   rm package-lock.json
+   ```
 
-2. **Start the development server**:
+2. **Deprecated Packages**:  
+   During installation, some packages showed warnings about being deprecated (e.g., `workbox-webpack-plugin`, `rimraf`). While they still function, it's a good idea to eventually replace or update them for long-term compatibility. Check the package documentation for alternatives.
 
-    In the integrated terminal of Visual Studio Code, run the following command:
+3. **Unmet Peer Dependencies**:  
+   Some packages have unmet peer dependencies, which were noted during the installation. These warnings do not break the build, but if you experience issues, you can install the missing peer dependencies manually. For example:
+   ```bash
+   yarn add typescript @babel/plugin-syntax-flow
+   ```
 
-    ```bash
-    npm start
-    ```
-
-3. **Access the app in your browser**:
-
-    Once the development server is running, open your browser and go to [http://localhost:3000](http://localhost:3000) to see the app in action.
+4. **Running the Application**:  
+   To start the application, run the following command:
+   ```bash
+   yarn start
+   ```
 
 
 
