@@ -31,6 +31,12 @@ LLMs · MAS · BPMN · RAG.
 You can request access to read the paper written for this project:
 https://www.overleaf.com/project/6687d7e743c43e829e68264e
 
+# Requirements
+Before proceeding with the installation, ensure you have the following:
+
+- Python 3.11 (Note: Python 3.12 is not compatible with the TTS library used in this project)
+- pip (Python package installer)
+
 # Installation
 Follow these steps to set up the project on your local machine:
 ```

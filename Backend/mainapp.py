@@ -23,7 +23,8 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 
 from state import message_state
-from tts.tts import setupTTS, speak
+from text_to_speech.tts import setupTTS, speak # previously: from tts.tts import setupTTS, speak
+# changed the folder's name from tts to text_to_speech because of the import error and the naming conflict
 
 app = FastAPI()
 

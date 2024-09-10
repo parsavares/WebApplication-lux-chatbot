@@ -30,6 +30,8 @@ langchain-openai
 langchain-text-splitters
 langchain_community
 langgraph
+langgraph-checkpoint
+langgraph-checkpoint-sqlite
 langsmith
 markdown-it-py
 MarkupSafe

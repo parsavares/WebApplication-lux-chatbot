@@ -1,10 +1,14 @@
 import os
 import requests
 import soundfile as sf
-import TTS
 
-from TTS.config import load_config
-from TTS.utils.manage import ModelManager
+# not used
+
+# import TTS
+
+# from TTS.config import load_config
+# from TTS.utils.manage import ModelManager
+
 from TTS.utils.synthesizer import Synthesizer
 
 def download_file(url, filename):
@@ -58,7 +62,7 @@ def setupTTS():
     return synthesizer
 
 
-def speak(synthesizer: TTS.utils.synthesizer.Synthesizer,
+def speak(synthesizer: Synthesizer,
           text: str,
           speaker_name: str = "Judith",
           language_name: str ='x-lb'):

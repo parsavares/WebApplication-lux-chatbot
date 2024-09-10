@@ -13,7 +13,7 @@ from Tutors_prompts import Conversational_Agent_Prompt,Reader_Agent_Prompt,Liste
 from langgraph.graph import StateGraph, END, START
 from langgraph.prebuilt import ToolNode
 from langchain_openai import ChatOpenAI
-from langgraph.checkpoint.aiosqlite import AsyncSqliteSaver
+from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver #previously: from langgraph.checkpoint.aiosqlite import AsyncSqliteSaver
 
 # imports from other files
 from routers import *
