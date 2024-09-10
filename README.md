@@ -8,6 +8,7 @@ This repository contains the **frontend** for the Luxembourgish Language Learnin
 - [Technologies Used](#technologies-used)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Setup with Yarn](#Setup-with-Yarn)
 - [Running the Application](#running-the-application)
 - [Screenshots](#screenshots)
 - [Future work](#Future-work)
@@ -59,6 +60,41 @@ Follow these steps to set up the project locally:
     npm install
     ```
 
+## Setup with Yarn
+
+To install dependencies and run the project using Yarn, follow these steps:
+
+1. **Install Yarn** (if not already installed):
+   ```bash
+   npm install -g yarn
+   ```
+
+2. **Install dependencies**:
+   Navigate to the project directory and run:
+   ```bash
+   yarn install
+   ```
+
+3. **Start the application**:
+   Run the application (replace `yarn start` with the actual start command for your project):
+   ```bash
+   yarn start
+   ```
+
+4. **Other useful Yarn commands**:
+   - Build the project for production:
+     ```bash
+     yarn build
+     ```
+   - Run tests:
+     ```bash
+     yarn test
+     ```
+
+For more information on using Yarn, visit the [official Yarn documentation](https://yarnpkg.com/).
+
+
+
 ## Running the Application
 
 1. **Open the project in Visual Studio Code**:
@@ -78,6 +114,9 @@ Follow these steps to set up the project locally:
 3. **Access the app in your browser**:
 
     Once the development server is running, open your browser and go to [http://localhost:3000](http://localhost:3000) to see the app in action.
+
+
+
 
 ## Screenshots
 
