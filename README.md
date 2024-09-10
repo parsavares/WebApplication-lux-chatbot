@@ -118,8 +118,6 @@ To install dependencies and run the project using Yarn, follow these steps:
 For more information on using Yarn, visit the [official Yarn documentation](https://yarnpkg.com/).
 
 
-Here's the part you requested in markdown format:
-
 
 ### Post-Installation Notes(Yarn)
 
