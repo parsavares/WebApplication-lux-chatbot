@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,11 +11,9 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 import { useTheme } from '@mui/material';
-import unilu from './assets/unilu.png'
+import unilu from './assets/unilu.png';
 import { NavLink } from 'react-router-dom';
-
 import { AuthContext } from './context/AuthContext';
-
 
 const pages = [
     { name: 'Home', path: '/' },
@@ -27,7 +24,7 @@ const loggedPages = [
     { name: 'Home', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Conversation', path: '/conversation' }
-]
+];
 const actions = [
     { name: 'Sign In', path: '/signin' },
     { name: 'Sign Up', path: '/signup' }
@@ -35,38 +32,45 @@ const actions = [
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { currentUser, signOut } = useContext(AuthContext);
-    const theme = useTheme()
+    const theme = useTheme();
+
+    // useEffect hook to handle window resize events
+    useEffect(() => {
+        const handleResize = () => {
+            setAnchorElNav(null); // Close the mobile menu when resizing
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const handleLogout = () => {
+        signOut();
+        window.location.href = '/';
     };
 
-    const handleLogout = () => {
-        signOut()
-        window.location.href = '/';
-    }
+    const menuItems = currentUser ? loggedPages : pages;
 
     return (
         <AppBar position="static" style={{ margin: 0 }} elevation={0} color='primary'>
             <Container maxWidth={false} sx={{ margin: 0, padding: 0 }}>
                 <Toolbar disableGutters>
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 3 }}>
-                        <img src={unilu} height="50" width="70"></img>
+                        <img src={unilu} height="50" width="70" alt="University Logo" />
                     </Box>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} cl>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -95,7 +99,7 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {menuItems.map((page) => (
                                 <NavLink key={page.name} to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">{page.name}</Typography>
@@ -104,37 +108,21 @@ function Navbar() {
                             ))}
                         </Menu>
                     </Box>
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-                    {!currentUser ? (
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {pages.map((page) => (
-                                <NavLink key={page.name} to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <Button
-                                        onClick={handleCloseNavMenu}
-                                        sx={{ my: 2, color: 'white', display: 'block' }}
-                                    >
-                                        {page.name}
-                                    </Button>
-                                </NavLink>
-                            ))}
-                        </Box>
-                    ) : (
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {loggedPages.map((page) => (
-                                <NavLink key={page.name} to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <Button
-                                        onClick={handleCloseNavMenu}
-                                        sx={{ my: 2, color: 'white', display: 'block' }}
-                                    >
-                                        {page.name}
-                                    </Button>
-                                </NavLink>
-                            ))}
-                        </Box>
-                    )}
-                    {!currentUser ? (
-                        <Box sx={{ flexGrow: 0 }}>
-                            {actions.map((item) => (
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {menuItems.map((page) => (
+                            <NavLink key={page.name} to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    {page.name}
+                                </Button>
+                            </NavLink>
+                        ))}
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        {!currentUser ? (
+                            actions.map((item) => (
                                 <NavLink key={item.name} to={item.path}>
                                     <Button>
                                         <Typography sx={{ color: theme.custom.text.white }}>
@@ -142,27 +130,28 @@ function Navbar() {
                                         </Typography>
                                     </Button>
                                 </NavLink>
-                            ))}
-                        </Box>
-                    ) : (
-                        <Box sx={{ flexGrow: 0 }}>
-                            <NavLink to="/profile">
-                                <Button>
+                            ))
+                        ) : (
+                            <>
+                                <NavLink to="/profile">
+                                    <Button>
+                                        <Typography sx={{ color: theme.custom.text.white }}>
+                                            Profile
+                                        </Typography>
+                                    </Button>
+                                </NavLink>
+                                <Button onClick={handleLogout}>
                                     <Typography sx={{ color: theme.custom.text.white }}>
-                                        profile
+                                        Logout
                                     </Typography>
                                 </Button>
-                            </NavLink>
-                            <Button onClick={handleLogout}>
-                                <Typography sx={{ color: theme.custom.text.white }}>
-                                    logout
-                                </Typography>
-                            </Button>
-                        </Box>
-                    )}
+                            </>
+                        )}
+                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
     );
 }
+
 export default Navbar;

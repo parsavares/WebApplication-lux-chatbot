@@ -148,13 +148,13 @@ For more information on using Yarn, visit the [official Yarn documentation](http
 ## Screenshots
 
 ### Home Page
-![Home Page](./home-page.png)
+![Home Page](./images/home-page.png)
 
 ### Dashboard
-![Dashboard](./dashboard.png)
+![Dashboard](./images/dashboard.png)
 
 ### Conversation Page
-![Conversation Page](./conversation-page.png)
+![Conversation Page](./images/conversation-page.png)
 
 ## Future work
 
