@@ -16,9 +16,10 @@ This repository contains the **frontend** for the Luxembourgish Language Learnin
 
 ## Overview
 
-All the credit from the [backend](https://github.com/parsavares/WebApplication-lux-chatbot/tree/main/Backend)
--Titouan Guerin
--Meryem Elfatimi
+All the credit from the [backend](https://github.com/parsavares/WebApplication-lux-chatbot/tree/main/Backend) goes to the following contributors:
+-[Titouan Guerin](https://github.com/Titouaaaan)
+-[Meryem Elfatimi](https://github.com/MeryMEF)
+The backend originally comes from the [official ELL-MMA](https://github.com/Titouaaaan/ELL-MMA) repository.
 
 
 The **Luxembourgish Language Learning** (LLL) web application is a React-based project that assists users in learning Luxembourgish through various language learning modules. The app offers interactive features and responsive design, making it suitable for use on multiple devices.
